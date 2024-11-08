@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bloom Flower Shop</title>
+  <style>
+    /* Reset and Basic Styling */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      color: #333;
+      background-color: #f7f7f7; /* Light background for the entire page */
+    }
+
+    /* Navigation Bar Styling */
+    header {
+      background: url('https://www.w3schools.com/w3images/flowers.jpg') no-repeat center center/cover; /* Test image URL */
+      background-color: #333; /* Fallback color if the image doesn't load */
+      min-height: 100px;
+      width: 100%;
+      position: relative;
+    }
+
+    .overlay {
+      position: relative;
+      background-color: rgba(0, 0, 0, 0.5); /* Overlay background color */
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2em;
+      min-height: 100px; /* Ensures overlay covers header */
+    }
+
+    .logo {
+      color: #fff;
+      font-size: 1.8em;
+      font-weight: bold;
+    }
+
+    /* Navigation Links Styling */
+    .nav-links {
+      list-style: none;
+      display: flex; /* Display flex to align horizontally */
+      gap: 1.5em; /* Adds space between each link */
+    }
+
+    .nav-links li {
+      display: inline-block;
+    }
+
+    .nav-links a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 1em;
+    }
+
+    .nav-links a:hover {
+      color: #ffefc1;
+    }
+
+    /* Mobile Layout - Stack Navigation Links Vertically */
+    @media (max-width: 767px) {
+      .overlay {
+        flex-direction: column;
+        align-items: center;
+        padding: 1em;
+      }
+
+      .nav-links {
+        flex-direction: column;
+        width: 100%;
+        text-align: center;
+      }
+
+      .nav-links li {
+        margin: 0.5em 0;
+      }
+    }
+
+    /* Welcome Section Styling */
+    .welcome-section {
+      padding: 4em 2em;
+      text-align: center;
+      background-color: #f7f7f7;
+    }
+
+    h1 {
+      color: #d4a5a5;
+      margin-bottom: 1em;
+    }
+
+    .slideshow {
+      width: 80%;
+      max-width: 600px;
+      margin: auto;
+    }
+
+    .slide {
+      width: 100%;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Contact Form Styling */
+    #contact {
+      padding: 2em;
+      text-align: center;
+    }
+
+    form {
+      max-width: 500px;
+      margin: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    input, textarea, button {
+      margin: 0.5em 0;
+      padding: 0.5em;
+      font-size: 1em;
+    }
+
+    #formMessage {
+      color: green;
+      margin-top: 1em;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <header>
+    <nav>
+      <div class="overlay">
+        <div class="logo">Bloom</div>
+        <ul class="nav-links">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#shop">Shop</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Welcome Section -->
+  <section id="home" class="welcome-section">
+    <h1>Welcome to Bloom Flower Shop</h1>
+    <div class="slideshow">
+      <img src="https://www.w3schools.com/w3images/flowers.jpg" alt="Flower arrangement 1" class="slide">
+      <img src="https://www.w3schools.com/w3images/flowers2.jpg" alt="Flower arrangement 2" class="slide" style="display:none;">
+      <img src="https://www.w3schools.com/w3images/flowers3.jpg" alt="Flower arrangement 3" class="slide" style="display:none;">
+    </div>
+    <button onclick="togglePromo()" id="promoButton">Show Promo</button>
+    <p id="promoText" style="display:none;">Special Offer: Get 10% off on your first purchase!</p>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact">
+    <h2>Contact Us</h2>
+    <form id="contactForm">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required>
+      
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required>
+
+      <label for="message">Message:</label>
+      <textarea id="message" name="message" required></textarea>
+
+      <button type="submit">Send Message</button>
+    </form>
+    <p id="formMessage"></p>
+  </section>
+
+  <script>
+    // Form Validation Script
+    document.getElementById("contactForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const name = document.getElementById("name").value;
+      const email = document.getElementById("email").value;
+      const message = document.getElementById("message").value;
+
+      if (name && email && message) {
+        document.getElementById("formMessage").textContent = "Thank you for contacting us!";
+        document.getElementById("formMessage").style.color = "green";
+        document.getElementById("contactForm").reset();
+      } else {
+        document.getElementById("formMessage").textContent = "Please fill out all fields.";
+        document.getElementById("formMessage").style.color = "red";
+      }
+    });
+
+    // Slideshow Script
+    let slideIndex = 0;
+    const slides = document.querySelectorAll(".slide");
+
+    function showSlides() {
+      slides.forEach((slide, index) => {
+        slide.style.display = index === slideIndex ? "block" : "none";
+      });
+      slideIndex = (slideIndex + 1) % slides.length;
+    }
+
+    setInterval(showSlides, 3000); // Change slide every 3 seconds
+
+    // Toggle Promo Script
+    function togglePromo() {
+      const promoText = document.getElementById("promoText");
+      const promoButton = document.getElementById("promoButton");
+
+      if (promoText.style.display === "none") {
+        promoText.style.display = "block";
+        promoButton.textContent = "Hide Promo";
+      } else {
+        promoText.style.display = "none";
+        promoButton.textContent = "Show Promo";
+      }
+    }
+  </script>
+</body>
+</html>
